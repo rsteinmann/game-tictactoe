@@ -1,0 +1,32 @@
+{
+  "name": "game-tictactoe",
+  "version": "1.0.0",
+  "description": "A simple Tic Tac Toe game, written in Javascript (ES6).",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "es6"
+  ],
+  "author": {
+    "name": "Raphael Steinmann",
+    "email": "steinmann.raphael@gmail.com"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "@types/jest": "^24.0.23",
+    "babel-jest": "^24.9.0",
+    "babel-loader": "^8.0.6",
+    "cross-env": "^6.0.3",
+    "deepmerge": "^4.2.2",
+    "eslint": "^6.7.2",
+    "jest": "^24.9.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "dependencies": {}
+}
