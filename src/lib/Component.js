@@ -16,15 +16,15 @@ export const register = {
 /**
  * Registers a component.
  * @param {Constructor} constructor  - Constructor of class
- * @param {Object} options - Options for component
+ * @param {Object} config - config for component
  */
-function registerComponent (constructor, options = {}) {
+function registerComponent (constructor, config = {}) {
     const collection = []
     document
         .querySelectorAll(`[data-component="${constructor.name}"]`)
         .forEach(element => {
             const instanceIndex = instances.push({}) - 1
-            instances[instanceIndex] = new constructor(instanceIndex, element, {...options, ...defaultOptions})
+            instances[instanceIndex] = new constructor(instanceIndex, element, {...config, ...defaults})
             console.log('instance', instanceIndex, instances[instanceIndex])
             collection.push(instances[instanceIndex])
         })
@@ -32,15 +32,15 @@ function registerComponent (constructor, options = {}) {
 }
 
 
-function registerShadow (constructor, options = {}) {
+function registerShadow (constructor, config = {}) {
     const instanceIndex = instances.push({}) - 1
-    instances[instanceIndex] = new constructor(instanceIndex, null, {...options, ...defaultOptions})
+    instances[instanceIndex] = new constructor(instanceIndex, null, {...config, ...defaults})
     return instances[instanceIndex]
 }
 
 
-function registerChildShadow (parent, constructor, options = {}) {
-    const instance = registerShadow(constructor, options)
+function registerChildShadow (parent, constructor, config = {}) {
+    const instance = registerShadow(constructor, config)
     instance.parent = parent
     parent.components.push(instance)
     return instance
@@ -56,24 +56,11 @@ export function init (components = instances) {
 }
 
 
-/**
- * Creates the Components element from options template string.
- * @param {Component} component - Any component that contains an `option.template` value
- * @return {NodeList} - The Nodelist generated out of the string
- */
-export function createElement (component) {
-    const element = Tmpl.parseTemplate(component.options.template, component)[0]
-    element.setAttribute('module-id', component.identifier)
-    return component.element = element
-}
-
-
-
-const defaultOptions = { debug: false }
+const defaults = { debug: false }
 
 
 export class DefaultComponent {
-    constructor (instanceIndex, element = null, options = {}) {
+    constructor (instanceIndex, element = null, config = {}) {
         this.components = []
         this.element = element
         this.identifier = `${this.constructor.name}_${instanceIndex}`
@@ -81,7 +68,7 @@ export class DefaultComponent {
         this.is.initialized = false
         this.is.rendered = false
         this.instanceIndex = instanceIndex
-        this.options = {...options, ...defaultOptions}
+        this.config = {...config, ...defaults}
         this.parent = null
         return this
     }
@@ -99,8 +86,8 @@ export class DefaultComponent {
 
 
 export default class Component extends DefaultComponent {
-    constructor (instanceIndex, element = null, options = {}) {
-        super(instanceIndex, element, options)
+    constructor (instanceIndex, element = null, config = {}) {
+        super(instanceIndex, element, config)
         this.element.setAttribute('module-id', this.identifier)
         return this
     }
@@ -114,15 +101,26 @@ export default class Component extends DefaultComponent {
 
 
 export class ShadowComponent extends DefaultComponent{
-    constructor (instanceIndex, element = null, options = {}) {
-        super(instanceIndex, element, options)
+    constructor (instanceIndex, element = null, config = {}) {
+        super(instanceIndex, element, config)
         return this
     }
 
     render () {
         super.render()
-        createElement(this)
+        this.createElement()
         this.parent.element.appendChild(this.element)
+        return this
+    }
+
+
+    /**
+     * Creates the Components element from config template string.
+     * @return {NodeList} - The Nodelist generated out of the string
+     */
+    createElement () {
+        this.element = Tmpl.parseTemplate(this.config.template, this)[0]
+        this.element.setAttribute('module-id', this.identifier)
         return this
     }
 }

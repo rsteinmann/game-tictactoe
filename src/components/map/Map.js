@@ -2,21 +2,21 @@ import Component, * as Components from '../../lib/Component'
 import MapTile from './MapTile'
 
 
-const defaultOptions = {
+const defaults = {
     mapSize: { x: 3, y: 3 },
 }
 
 
 export default class Map extends Component {
-    constructor (instanceIndex, element, options = {}) {
-        options = {...options, ...defaultOptions}
-        super(instanceIndex, element, options)
+    constructor (instanceIndex, element, config = {}) {
+        config = {...config, ...defaults}
+        super(instanceIndex, element, config)
     }
     
 
     init () {
-        this.generate(this.options.mapSize.x, this.options.mapSize.y)
         super.init()
+        this.generate(this.config.mapSize.x, this.config.mapSize.y)
         this.render()
         return this
     }

@@ -1,0 +1,22 @@
+.map
+    height: 300px
+    width: 300px
+    display: flex
+    flex-wrap: wrap
+
+.map-tile
+    height: 33%
+    flex: 0 0 33.333%
+    border-color: #ba68c8
+    border-style: solid
+    border-width: 0
+    border-right-width: 2px
+    border-bottom-width: 2px
+    transition: background-color 250ms ease-in-out
+    &:nth-child(3n)
+        border-right-width: 0
+    &:nth-child(n+7):nth-child(-n+9)
+        border-bottom-width: 0
+    &:hover
+        transition: background-color 300ms ease-in-out
+        background-color: #f3e5f5
