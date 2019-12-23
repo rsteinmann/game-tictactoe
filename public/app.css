@@ -1,0 +1,36 @@
+body, main {
+  box-sizing: border-box;
+  height: 100vh;
+  margin: 0;
+  padding: 0; }
+
+.container-map {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; }
+
+.map {
+  height: 300px;
+  width: 300px;
+  display: flex;
+  flex-wrap: wrap; }
+
+.map > .map-tile {
+  box-sizing: border-box;
+  height: 33%;
+  flex: 0 0 33.333%;
+  border-color: #ba68c8;
+  border-style: solid;
+  border-width: 0;
+  border-right-width: 2px;
+  border-bottom-width: 2px; }
+
+.map > .map-tile:nth-child(3n) {
+  border-right-width: 0; }
+
+.map > .map-tile:nth-child(n+7):nth-child(-n+9) {
+  border-bottom-width: 0; }
+
+
+/*# sourceMappingURL=app.css.map*/
