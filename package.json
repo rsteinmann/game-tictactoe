@@ -32,7 +32,7 @@
     "eslint": "^6.7.2",
     "jest": "^24.9.0",
     "mini-css-extract-plugin": "^0.9.0",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.1.1",
     "webpack": "^4.41.2",
